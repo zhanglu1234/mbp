@@ -81,20 +81,22 @@ export default {
       show: false,
       keyNumber: "",
       value: "",
-      wmToUpGoodsstr: {
-        orderIdI: '"4028b8817433f2df01743330003"',
-        createBy: '"admin"',
-        goodsProData: '"2020-08-27"',
-        binId: '"A32323"',
-        orderId: '"RK20200828-0001"',
-        goodsId: '"1003"',
-        wmToUpId: '"4028b8817433f2df017433f5045c0006"',
-        goodsQua: '"190"',
-        goodsUnit: '"箱"',
-        kuWeiBianMa: '"03-07-1"',
-        cusCode: '"customer2"',
+      wmToDownGoodsstr: {
         id: '"bcb568fd645c4e2e869fce7734f477cd"',
+        createBy: '"admin"',
+        goodsId: '"1003"',
+        goodsQua: '"190"',
+        orderId: '"RK20200828-0001"',
+        orderIdI: '"4028b8817433f2df01743330003"',
+        goodsUnit: '"箱"',
+        goodsProData: '"2020-08-27"',
+        kuWeiBianMa: '"03-07-1"',
+        binIdTo: '""',
+        binIdFrom: '""',
+        cusCode: '"customer2"',
+        baseUnit: '""',
         baseGoodscount: '"123"',
+        bwmToDownGoodsstr: '" "',
       },
     };
   },
@@ -104,53 +106,65 @@ export default {
       params.append(
         "wmToDownGoodsstr",
         "{" +
-          '"orderIdI"' +
+          '"id"' +
           ":" +
-          this.wmToUpGoodsstr.orderIdI +
+          this.wmToDownGoodsstr.id +
           "," +
           '"createBy"' +
           ":" +
-          this.wmToUpGoodsstr.createBy +
-          "," +
-          '"goodsProData"' +
-          ":" +
-          this.wmToUpGoodsstr.goodsProData +
-          "," +
-          '"binId"' +
-          ":" +
-          this.wmToUpGoodsstr.binId +
-          "," +
-          '"orderId"' +
-          ":" +
-          this.wmToUpGoodsstr.orderId +
+          this.wmToDownGoodsstr.createBy +
           "," +
           '"goodsId"' +
           ":" +
-          this.wmToUpGoodsstr.goodsId +
-          "," +
-          '"wmToUpId"' +
-          ":" +
-          this.wmToUpGoodsstr.wmToUpId +
+          this.wmToDownGoodsstr.goodsId +
           "," +
           '"goodsQua"' +
           ":" +
-          this.wmToUpGoodsstr.goodsQua +
+          this.wmToDownGoodsstr.goodsQua +
+          "," +
+          '"orderId"' +
+          ":" +
+          this.wmToDownGoodsstr.orderId +
+          "," +
+          '"orderIdI"' +
+          ":" +
+          this.wmToDownGoodsstr.orderIdI +
           "," +
           '"goodsUnit"' +
           ":" +
-          this.wmToUpGoodsstr.goodsUnit +
+          this.wmToDownGoodsstr.goodsUnit +
+          "," +
+          '"goodsProData"' +
+          ":" +
+          this.wmToDownGoodsstr.goodsProData +
           "," +
           '"kuWeiBianMa"' +
           ":" +
-          this.wmToUpGoodsstr.kuWeiBianMa +
+          this.wmToDownGoodsstr.kuWeiBianMa +
+          "," +
+          '"binIdTo"' +
+          ":" +
+          this.wmToDownGoodsstr.binIdTo +
+          "," +
+          '"binIdFrom"' +
+          ":" +
+          this.wmToDownGoodsstr.binIdFrom +
           "," +
           '"cusCode"' +
           ":" +
-          this.wmToUpGoodsstr.cusCode +
+          this.wmToDownGoodsstr.cusCode +
           "," +
-          '"id"' +
+          '"baseUnit"' +
           ":" +
-          this.wmToUpGoodsstr.id +
+          this.wmToDownGoodsstr.baseUnit +
+          "," +
+          '"baseGoodscount"' +
+          ":" +
+          this.wmToDownGoodsstr.baseGoodscount +
+          "," +
+          '"bwmToDownGoodsstr"' +
+          ":" +
+          this.wmToDownGoodsstr.bwmToDownGoodsstr +
           "}"
       );
       await this.$axios
@@ -161,7 +175,7 @@ export default {
         })
         .then((response) => {
           const res = response.data;
-          if (res.ok != true) return console.log(res);
+          if (res.ok != true) return this.$toast("商品成功下架");
         })
         .catch((Error) => {
           console.log(Error);

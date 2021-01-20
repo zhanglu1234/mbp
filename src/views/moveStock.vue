@@ -89,11 +89,107 @@ export default {
       show: false,
       keyNumber: "",
       value: "",
+      wmToMoveGoodsstr: {
+        id: '"40286a816f8e078a016f9073c1410026"',
+        goodsId: '"C040032"',
+        goodsName: '"灵鹿谷演示数据"',
+        goodsQua: '"16"',
+        baseGoodscount: '"16"',
+        goodsProData: '"2018-07-17"',
+        toGoodsProData: '""',
+        goodsUnit: '"袋"',
+        cusCode: '"xkn-D"',
+        cusName: '"xkn-D"',
+        tinFrom: '"A"',
+        tinId: '"C"',
+        binFrom: '"A004"',
+        binTo: '"A005"',
+        moveSta: '"计划中"',
+        toCusCode: '"customer1"',
+      },
     };
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       console.log("确定移库");
+      const params = new FormData();
+      params.append(
+        " wmToMoveGoodsstr",
+        "{" +
+          '"id"' +
+          ":" +
+          this.wmToMoveGoodsstr.id +
+          "," +
+          '"goodsId"' +
+          ":" +
+          this.wmToMoveGoodsstr.goodsId +
+          "," +
+          '"goodsName"' +
+          ":" +
+          this.wmToMoveGoodsstr.goodsName +
+          "," +
+          '"goodsQua"' +
+          ":" +
+          this.wmToMoveGoodsstr.goodsQua +
+          "," +
+          '"baseGoodscount"' +
+          ":" +
+          this.wmToMoveGoodsstr.baseGoodscount +
+          "," +
+          '"goodsProData"' +
+          ":" +
+          this.wmToMoveGoodsstr.goodsProData +
+          "," +
+          '"goodsUnit"' +
+          ":" +
+          this.wmToMoveGoodsstr.goodsUnit +
+          "," +
+          '"cusCode"' +
+          ":" +
+          this.wmToMoveGoodsstr.cusCode +
+          "," +
+          '"cusName"' +
+          ":" +
+          this.wmToMoveGoodsstr.cusName +
+          "," +
+          '"tinFrom"' +
+          ":" +
+          this.wmToMoveGoodsstr.tinFrom +
+          "," +
+          '"ktinId"' +
+          ":" +
+          this.wmToMoveGoodsstr.tinId +
+          "," +
+          '"binFrom"' +
+          ":" +
+          this.wmToMoveGoodsstr.binFrom +
+          "," +
+          '"binTo"' +
+          ":" +
+          this.wmToMoveGoodsstr.binTo +
+          "," +
+          '"moveSta"' +
+          ":" +
+          this.wmToMoveGoodsstr.moveSta +
+          "," +
+          '"toCusCode"' +
+          ":" +
+          this.wmToMoveGoodsstr.toCusCode +
+          "}"
+      );
+      await this.$axios
+        .post("/rest/wmToMoveGoodsController/change", params, {
+          header: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((Response) => {
+          const res = Response.data;
+          if (res.ok == true) this.$toast("商品成功移库");
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
     },
     onClickLeft() {
       this.$router.push("/index");

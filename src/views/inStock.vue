@@ -158,7 +158,7 @@ export default {
         })
         .then((response) => {
           const res = response.data;
-          if (res.ok != true) return console.log(res);
+          if (res.ok != true) return this.$toast("商品成功上架");
         })
         .catch((Error) => {
           console.log(Error);
