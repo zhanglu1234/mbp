@@ -44,7 +44,6 @@ export default {
     //			asdf(){
     //				console.log("l23")
     //				this.$refs.formref.validate();
-    //
     //			},
 
     hhhhh() {
