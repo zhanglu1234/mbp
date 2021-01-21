@@ -6,7 +6,8 @@
         <van-row type="flex">
           <van-col span="24" class="col-border">
             <van-search
-              v-model="value"
+              v-model="goodsSearch"
+              @search="onSearch"
               placeholder="请扫描或录入待上架的货架号"
             />
           </van-col>
@@ -32,12 +33,12 @@
                   <van-cell title="托盘号：" />
                 </van-col>
                 <van-col class="col-border" span="15">
-                  <van-cell value="1011" />
+                  <van-cell :value="goodsSearch" />
                 </van-col>
               </van-row>
             </div>
             <div class="file-form">
-              <van-field label="商品名称：" placeholder="智利JJ车厘子10KG" />
+              <van-field label="商品名称：" :value="wmToUpGoodsstr.goodsName" />
               <van-field label="建议库位：" placeholder="1101" />
               <van-field label="批次号：" placeholder="202009200001" />
               <van-field label="托盘号：" placeholder="100 件" />
@@ -79,75 +80,117 @@ export default {
       show: false,
       keyNumber: "",
       wmToUpGoodsstr: {
-        orderIdI: '"4028b8817433f2df01743330003"',
-        createBy: '"admin"',
-        goodsProData: '"2020-08-27"',
-        binId: '"A32323"',
-        orderId: '"RK20200828-0001"',
-        goodsId: '"1003"',
-        wmToUpId: '"4028b8817433f2df017433f5045c0006"',
-        goodsQua: '"190"',
-        goodsUnit: '"箱"',
-        kuWeiBianMa: '"03-07-1"',
-        cusCode: '"customer2"',
-        id: '"bcb568fd645c4e2e869fce7734f477cd"',
+        orderIdI: '""',
+        createBy: '""',
+        goodsProData: '""',
+        binId: '""',
+        orderId: '""',
+        goodsId: '""',
+        wmToUpId: '""',
+        goodsQua: '""',
+        goodsUnit: '""',
+        kuWeiBianMa: '""',
+        cusCode: '""',
+        id: '""',
       },
-      value: "",
+      goodsSearch: "",
+      searchstr: "",
+      searchstr2: "",
     };
   },
   methods: {
+    async onSearch() {
+      const username = localStorage.getItem("username");
+      await this.$axios
+        .get("/rest/wmInQmIController", {
+          params: {
+            username: username,
+            searchstr: this.searchstr,
+            searchstr2: this.searchstr2,
+          },
+        })
+        .then((response) => {
+          const res = response.data;
+          if (res.ok == true) this.wmToUpGoodsstr = res.obj[0];
+        });
+    },
     async onSubmit() {
+      console.log(this.wmToUpGoodsstr);
       const params = new FormData();
       params.append(
         "wmToUpGoodsstr",
         "{" +
           '"orderIdI"' +
           ":" +
-          this.wmToUpGoodsstr.orderIdI +
+          '"' +
+          this.wmToUpGoodsstr.imNoticeItem +
+          '"' +
           "," +
           '"createBy"' +
           ":" +
+          '"' +
           this.wmToUpGoodsstr.createBy +
+          '"' +
           "," +
           '"goodsProData"' +
           ":" +
-          this.wmToUpGoodsstr.goodsProData +
+          '"' +
+          this.wmToUpGoodsstr.proData +
+          '"' +
           "," +
           '"binId"' +
           ":" +
-          this.wmToUpGoodsstr.binId +
+          '"' +
+          this.wmToUpGoodsstr.tinId +
+          '"' +
           "," +
           '"orderId"' +
           ":" +
-          this.wmToUpGoodsstr.orderId +
+          '"' +
+          this.wmToUpGoodsstr.imNoticeId +
+          '"' +
           "," +
           '"goodsId"' +
           ":" +
+          '"' +
           this.wmToUpGoodsstr.goodsId +
+          '"' +
           "," +
           '"wmToUpId"' +
           ":" +
-          this.wmToUpGoodsstr.wmToUpId +
+          '"' +
+          this.wmToUpGoodsstr.id +
+          '"' +
           "," +
           '"goodsQua"' +
           ":" +
-          this.wmToUpGoodsstr.goodsQua +
+          '"' +
+          this.wmToUpGoodsstr.baseGoodscount +
+          '"' +
           "," +
           '"goodsUnit"' +
           ":" +
+          '"' +
           this.wmToUpGoodsstr.goodsUnit +
+          '"' +
           "," +
           '"kuWeiBianMa"' +
           ":" +
-          this.wmToUpGoodsstr.kuWeiBianMa +
+          '"' +
+          this.wmToUpGoodsstr.binId +
+          '"' +
           "," +
           '"cusCode"' +
           ":" +
+          '"' +
           this.wmToUpGoodsstr.cusCode +
+          '"' +
           "," +
           '"id"' +
           ":" +
+          '"' +
           this.wmToUpGoodsstr.id +
+          '"' +
           "}"
       );
       await this.$axios

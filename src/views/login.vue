@@ -54,6 +54,7 @@ export default {
           const res = response.data;
           if (res.ok != true) return this.$toast.fail("用户名与密码不一致！");
           this.$router.push("/index");
+          localStorage.setItem("username", this.username);
         })
         .catch((error) => {
           console.log(Error);

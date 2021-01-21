@@ -10,7 +10,6 @@ import './assets/css/global.css'
 
 Vue.use(Vant);
 
-
 axios.defaults.baseURL = '/jeewms_war_exploded'
 
 Vue.prototype.$axios = axios
